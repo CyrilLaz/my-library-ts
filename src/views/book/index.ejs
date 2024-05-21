@@ -1,0 +1,25 @@
+<%- include('../port/layout-top.ejs',{hasSocket:false}) %>
+<div class="list-group">
+  <% if(books.length) { %> <% books.map(book=>{%>
+  <a
+    href="/books/<%= book.id %>"
+    class="list-group-item list-group-item-action d-flex justify-content-between"
+  >
+    <span>
+      <%= book.title %> <% if (book.favorite) { %>
+      <span>💖</span>
+      <% } %>
+    </span>
+    <span><%= book.countView %> </span>
+  </a>
+  <% }) %> <% } else { %>
+  <h3 class="mt-9">Книг пока нет</h3>
+  <% } %>
+</div>
+<a href="/books/create" class="btn btn-primary">Добавить книгу</a>
+</main>
+<footer>
+<%- include('../port/navigation.ejs') %>
+<%- include('../port/layout-bottom.ejs') %>
+</body>
+</html>

@@ -1,0 +1,32 @@
+services:
+  mongodb:
+    image: mongo:jammy
+    volumes:
+      - ./data/db:/data/db
+  storage:
+    image: redis
+    volumes:
+      - ./data:/data
+  counter:
+    image: cyrillaz/counter
+    environment:
+      - PORT=3001
+      - REDIS_URL=redis://storage
+    depends_on:
+      - storage
+  library:
+    image: node:20.10-alpine
+    working_dir: /app
+    command: npm run dev
+    volumes:
+      - ./:/app
+    environment:
+      - COUNTER_URL=http://counter:3001/
+      - PORT=3000
+      - NODE_ENV=production
+      - SESSION_SECRET=SECRET
+      - MONGO_URL=mongodb://mongodb/library
+    ports:
+      - 80:3000
+    depends_on:
+      - mongodb
