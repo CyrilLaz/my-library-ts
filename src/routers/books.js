@@ -1,7 +1,3 @@
-/**
- *@typedef {import("../../types").TController} TController
- */
-
 const {
   createBook,
   editBook,
