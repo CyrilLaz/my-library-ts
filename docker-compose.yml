@@ -23,7 +23,7 @@ services:
     environment:
       - COUNTER_URL=http://counter:3001/
       - PORT=3000
-      - NODE_ENV=production
+      # - NODE_ENV=production
       - SESSION_SECRET=SECRET
       - MONGO_URL=mongodb://mongodb/library
     ports:

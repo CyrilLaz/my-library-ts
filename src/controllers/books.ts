@@ -1,19 +1,17 @@
-/**
- *@typedef {import("../../types.js").TController} TController
- */
-const { myContainer } = require("../container.js");
-const { BooksRepository } = require("../interfaces/BooksRepository.js");
-const { Book } = require("../models/Book.js");
+import { NextFunction, Request, Response } from "express";
+import { myContainer } from "../container";
+import { BooksRepository } from "../interfaces/BooksRepository.js";
+import { BookService } from "../services/Books.service";
+// import { Book } from "../models/Book.js";
 
-/**@type TController */
-const createBook = async (req, res, next) => {
+const createBook = async (req:Request, res:Response, next:NextFunction) => {
   const { body } = req;
 
   if (!body.title) {
     res.status(400).json({ error: "No Title" });
     return;
   }
-  const bookRepo = myContainer.get(BooksRepository);
+  const bookRepo = myContainer.get(BookService);
   try {
     await bookRepo.createBook(body);
     res.redirect("/books");
@@ -22,10 +20,9 @@ const createBook = async (req, res, next) => {
   }
 };
 
-/**@type TController */
-const downloadBookById = async (req, res, next) => {
+const downloadBookById = async (req:Request, res:Response, next:NextFunction) => {
   const { id } = req.params;
-  const bookRepo = myContainer.get(BooksRepository);
+  const bookRepo = myContainer.get(BookService);
 
   try {
     const book = await bookRepo.getBook(id);
@@ -34,21 +31,21 @@ const downloadBookById = async (req, res, next) => {
       return;
     }
 
-    res.download(file.fileBook, file.fileName, (err) => {
-      if (err) {
-        res.status(500).send({ error: "Error File" });
-      }
-    });
+    // res.download(file.fileBook, file.fileName, (err) => {
+    //   if (err) {
+    //     res.status(500).send({ error: "Error File" });
+    //   }
+    // });
   } catch (error) {
     res.status(500).send(error);
   }
 };
-/**@type TController */
-const editBook = async (req, res) => {
+
+const editBook = async (req:Request, res:Response) => {
   const { id } = req.params;
   const { body } = req;
 
-  const bookRepo = myContainer.get(BooksRepository);
+  const bookRepo = myContainer.get(BookService);
 
   if (!body.favorite) {
     body.favorite = false;
@@ -62,11 +59,10 @@ const editBook = async (req, res) => {
   }
 };
 
-/**@type TController */
-const deleteBook = async (req, res) => {
+const deleteBook = async (req:Request, res:Response) => {
   const { id } = req.params;
 
-  const bookRepo = myContainer.get(BooksRepository);
+  const bookRepo = myContainer.get(BookService);
   try {
     await bookRepo.deleteBook(id);
     res.send("ok");
@@ -75,7 +71,7 @@ const deleteBook = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   downloadBookById,
   createBook,
   editBook,
