@@ -1,18 +1,22 @@
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const { User } = require("../models/User");
+import passport from "passport";
+import {
+  IStrategyOptions,
+  Strategy as LocalStrategy,
+  VerifyFunction,
+} from "passport-local";
+import { User } from "../models/User";
 
-const verify = async (name, password, done) => {
-  //   let user;
+const verify: VerifyFunction = async (name, password, done) => {
   try {
     const user = await User.findUserByCredentials(name, password);
+
     done(null, user);
   } catch (error) {
     done(null, false);
   }
 };
 
-const option = {
+const option: IStrategyOptions = {
   usernameField: "username",
   passwordField: "password",
 };
@@ -32,4 +36,4 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-module.exports.localPassport = passport;
+export { passport as localPassport };

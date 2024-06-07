@@ -1,6 +1,8 @@
-const { User } = require("../../models/User");
+import { Router } from "express";
+import { User } from "../../models/User";
+import { localPassport } from "../../middlewares/passport";
 
-const router = require("express").Router();
+const router = Router();
 
 router.get(
   "/login",
@@ -29,15 +31,10 @@ router.get(
     res.render("user/profile", { title: "Profile", user });
   }
 );
-
+// authenticate
 router.post(
   "/login",
-  (req, res, next) =>
-    req.authenticate("local", { failureRedirect: "/api/user/login" })(
-      req,
-      res,
-      next
-    ),
+  localPassport.authenticate("local", { failureRedirect: "/api/user/login" }),
   (req, res) => {
     // получение данных для входа
     res.redirect("/books");
@@ -50,8 +47,8 @@ router.post("/signup", async (req, res) => {
   try {
     await User.createNewUser(username, password);
     return res.redirect("/api/user/login");
-  } catch ({ message }) {
-    res.status(400).json({ message });
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
@@ -64,4 +61,4 @@ router.get("/logout", (req, res) => {
   });
 });
 
-module.exports.userRouter = router;
+export default router;
