@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import IBook from "../interfaces/Book.interface";
+import IBook, { IBookDocument } from "../interfaces/Book.interface";
 import { BooksRepository } from "../interfaces/BooksRepository";
 import { Book } from "../models/Book";
 
@@ -14,7 +14,7 @@ export class BookService extends BooksRepository {
       throw error;
     }
   }
-  async getBooks(): Promise<IBook[]> {
+  async getBooks(): Promise<IBookDocument[]> {
     try {
       const books = await Book.find();
       return books;
@@ -23,7 +23,7 @@ export class BookService extends BooksRepository {
     }
   }
   async deleteBook(id: string): Promise<void> {}
-  async getBook(id: string): Promise<IBook> {
+  async getBook(id: string): Promise<IBookDocument> {
     try {
       const book = await Book.findById(id);
       return book;

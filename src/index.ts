@@ -1,16 +1,18 @@
-import express from "express";
 import mongoose from "mongoose";
+import express from "express";
 import path from "path";
 import session from "express-session";
+
 import { createServer } from "http";
-import { routers } from "./routers";
 import { PORT, NODE_ENV, MONGO_URL, SESSION_SECRET } from "./config";
+import { SocketIO } from "./socket/SocketIO";
+
+import { routers } from "./routers";
 import { localPassport } from "./middlewares/passport";
-// import { SocketIO } from "./socket/SocketIO";
 
 const app = express();
 const server = createServer(app);
-// const socketIO = new SocketIO(server);
+const io = new SocketIO(server);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -18,12 +20,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   session({ secret: SESSION_SECRET, saveUninitialized: true, resave: false })
 );
-
+//  const socketIO =
 app.use(localPassport.initialize());
 app.use(localPassport.session());
 app.use((req, res, next) => {
-  // req.authenticate = (...rest) => localPassport.authenticate(...rest);
-  // req.socketIO = socketIO;
+  req.socketIO = io;
   next();
 });
 

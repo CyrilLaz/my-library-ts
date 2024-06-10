@@ -1,7 +1,7 @@
 <div id="commentsBlock" class="container mt-5">
   <h2>Комментарии</h2>
     <div class="comments">
-        <% book.messages.forEach(message => { %>
+        <% chat.messages.forEach(message => { %>
             <div class="comment p-3 border rounded mb-2">
               <span class="username"><%=message.user.username %></span>
               <p><%= message.text %></p>

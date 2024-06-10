@@ -1,3 +1,5 @@
+import { Document } from "mongoose";
+
 export default interface IBook {
   title: string;
   description?: string;
@@ -7,3 +9,4 @@ export default interface IBook {
   fileName?: string;
 }
 
+export interface IBookDocument extends IBook, Document {}

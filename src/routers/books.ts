@@ -6,6 +6,7 @@ import { getAllBooks, getBookById } from "../middlewares/book";
 // import { incrementCount, getCounts } from "../middlewares/counter";
 
 import { Router } from "express";
+import { getComments } from "../middlewares/comments";
 const router = Router();
 
 router.get("/",
@@ -19,7 +20,7 @@ router.get(
   "/:id",
 //   incrementCount,
   getBookById,
-//   getComments,
+  getComments,
   render.renderBookView
 );
 router.get("/:id/update", getBookById, render.renderUpdateBookView);

@@ -1,5 +1,5 @@
 import { IUser } from "../interfaces/User.interface";
-import { UserModel } from "../interfaces/User.model";
+import { UserModel } from "./User.model";
 
 import { Model, Schema, model } from "mongoose";
 
