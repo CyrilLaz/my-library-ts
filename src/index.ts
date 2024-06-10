@@ -20,7 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   session({ secret: SESSION_SECRET, saveUninitialized: true, resave: false })
 );
-//  const socketIO =
 app.use(localPassport.initialize());
 app.use(localPassport.session());
 app.use((req, res, next) => {

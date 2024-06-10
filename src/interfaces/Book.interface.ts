@@ -9,4 +9,6 @@ export default interface IBook {
   fileName?: string;
 }
 
-export interface IBookDocument extends IBook, Document {}
+export interface IBookDocument extends IBook, Document {
+  countView?: number;
+}

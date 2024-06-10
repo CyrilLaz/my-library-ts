@@ -1,3 +1,4 @@
+import { NextFunction, Request, Response } from "express";
 import { IBookDocument } from "./interfaces/Book.interface";
 import { IComments, IMessage } from "./interfaces/Comments.interface";
 import { IUserDocument } from "./interfaces/User.interface";
@@ -10,6 +11,12 @@ type TBooks = Record<"books", IBookDocument[]>;
 // type XOR<T, U> = T | U extends object
 //   ? (Without<T, U> & U) | (Without<U, T> & T)
 //   : T | U;
+
+export type TController = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => unknown;
 
 declare global {
   namespace Express {
