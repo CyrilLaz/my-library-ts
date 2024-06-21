@@ -3,11 +3,15 @@ import { Server as HttpServer, IncomingMessage, ServerResponse } from "http";
 import { Server } from "socket.io";
 import { IComments, IMessage } from "../interfaces/Comments.interface";
 import { IUser, IUserDocument } from "../interfaces/User.interface";
+import { inject, injectable } from "inversify";
+import { server } from "../infrastructure/server";
+// import { httpServer } from "../server";
 
+@injectable()
 export class SocketIO {
   private io: Server;
   constructor(
-    server: HttpServer<typeof IncomingMessage, typeof ServerResponse>
+
   ) {
     this.io = new Server(server);
   }

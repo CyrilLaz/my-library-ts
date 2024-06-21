@@ -1,7 +1,7 @@
 import { NextFunction, Response, Request } from "express";
 import IBook from "../interfaces/Book.interface";
 
-import { myContainer } from "../container.js";
+import { myContainer } from "../infrastructure/container.js";
 import { BooksRepository } from "../interfaces/BooksRepository.js";
 import { Book } from "../models/Book";
 import { BookService } from "../services/Books.service";
